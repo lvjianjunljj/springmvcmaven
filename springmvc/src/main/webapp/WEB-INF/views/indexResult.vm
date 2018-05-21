@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Search Page</title>
+<script language ="javascript">
+    function clean(){
+        document.getElementById('repositoryPathId').value="";
+        document.getElementById('downloadURLId').value="";
+        document.getElementById('repositoryContentId').value="";
+        document.getElementById('topicsListId1').value="";
+        document.getElementById('topicsListId2').value="";
+        document.getElementById('topicsListId3').value="";
+        document.getElementById('topicsListId4').value="";
+
+
+    }
+    function prevPage() {
+        var pageCount = document.getElementById('pageCountIntId').innerHTML;
+        if (pageCount == 0) {
+            return;
+        }
+        var pageIndexCur = document.getElementById('pageIndexIntId').innerHTML;
+        if (pageIndexCur == 1) {
+            pageIndexCur = pageCount;
+        } else {
+            pageIndexCur--;
+        }
+        document.getElementById('pageIndexIntId').innerHTML=pageIndexCur;
+        refreshResult(pageIndexCur);
+    }
+    function nextPage() {
+        var pageCount = document.getElementById('pageCountIntId').innerHTML;
+        if (pageCount == 0) {
+            return;
+        }
+        var pageIndexCur = document.getElementById('pageIndexIntId').innerHTML;
+        if (pageIndexCur == pageCount) {
+            pageIndexCur = 1;
+        } else {
+            pageIndexCur++;
+        }
+        document.getElementById('pageIndexIntId').innerHTML=pageIndexCur;
+        refreshResult(pageIndexCur);
+    }
+    function refreshResult(pageIndex) {
+        document.getElementById('repositoryPathResultId').value=document.getElementById('repositoryPathResultId' + pageIndex).value;
+        document.getElementById('downloadURLResultId').value=document.getElementById('downloadURLResultId' + pageIndex).value;
+        document.getElementById('impressionCountResultId').value=document.getElementById('impressionCountResultId' + pageIndex).value;
+        document.getElementById('clickCountResultId').value=document.getElementById('clickCountResultId' + pageIndex).value;
+        document.getElementById('repositoryContentResultId').value=document.getElementById('repositoryContentResultId' + pageIndex).value;
+        document.getElementById('topicsListResultId').value=document.getElementById('topicsListResultId' + pageIndex).value;
+        document.getElementById('readmeContentResultId').innerHTML=document.getElementById('readmeContentResultId' + pageIndex).innerHTML;
+    }
+    function downloadZip() {
+        window.location.href=document.getElementById('downloadURLResultId').value;
+    }
+
+</script>
+</head>
+<form action="http://10.190.149.16:8080/spring-mvc/crawler/index" method="post">
+    <fieldset>
+        <legend>Search Area</legend>
+        <table border="1" bordercolor="#0099FF" width="90%" cellpadding="10" cellspacing="0">
+            <tr>
+                <th colspan="2">Search Page</th>
+            </tr>
+            <tr>
+                <td>repositoryPath</td>
+                <td><input type="text" id= "repositoryPathId" style="width:1200px; height:25px;" name="repositoryPath" value="$repositoryPath"/></td>
+            </tr>
+            <tr>
+                <td>downloadURL</td>
+                <td><input type="text" id= "downloadURLId" style="width:1200px; height:25px;" name="downloadURL" value="$downloadURL"/></td>
+            </tr>
+            <tr>
+                <td>repositoryPathContent</td>
+                <td><input type="text" id= "repositoryContentId" style="width:1200px; height:25px;" name="repositoryContent" value="$repositoryContent" /></td>
+            </tr>
+            <tr>
+                <td>topicsList</td>
+                <td>
+                    <input type="text" id= "topicsListId1" name="topicsList1" style="height:25px;" value="$topicsList1" />
+                    <input type="text" id= "topicsListId2" name="topicsList2" style="height:25px;" value="$topicsList2" />
+                    <input type="text" id= "topicsListId3" name="topicsList3" style="height:25px;" value="$topicsList3" />
+                    <input type="text" id= "topicsListId4" name="topicsList4" style="height:25px;" value="$topicsList4" />
+                </td>
+            </tr>
+             <tr>
+                <th colspan="2">
+                     <input type="submit" value="Search" />
+                     <input type="button" value="Clean" onclick="clean()" />
+                 </th>
+             </tr>
+        </table>
+    </fieldset>
+ &nbsp;
+    <fieldset>
+        <legend>Search Result</legend>
+    <input value="Prev" type="button" onclick="prevPage()"/>
+    &#9;&#9;
+    <a id= "pageIndexIntId" name="pageIndexInt">$pageIndexInt<a/>
+    &nbsp;/&nbsp;
+    <a id= "pageCountIntId" name="pageCountInt">$pageCountInt<a/>
+    &#9;&#9;
+    <input value="Next" type="button" onclick="nextPage()"/>
+    &#9;&#9;
+    <a id= "noDataInfoId" name="noDataInfo">$noDataInfo<a/>
+        <table border="1" bordercolor="#0099FF" width="90%" cellpadding="10" cellspacing="0">
+            <tr>
+                <th colspan="2">Reult Page</th>
+            </tr>
+            <tr>
+                <td>repositoryPath</td>
+                <td><input type="text" id= "repositoryPathResultId" style="width:1200px; height:25px;" value="$repositoryPathResult"/></td>
+            </tr>
+            <tr>
+                <td>downloadURL</td>
+                <td>
+                    <input type="text" id= "downloadURLResultId" style="width:1200px; height:25px;" value="$downloadURLResult"/>
+                    <input value="Download Zip" type="button" onclick="downloadZip()"/>
+                </td>
+            </tr>
+            <tr>
+                <td>impressionCount</td>
+                <td><input type="text" id= "impressionCountResultId" style="width:1200px; height:25px;" value="$impressionCountResult" /></td>
+            </tr>
+            <tr>
+                <td>clickCount</td>
+                <td><input type="text" id= "clickCountResultId" style="width:1200px; height:25px;" value="$clickCountResult" /></td>
+            </tr>
+            <tr>
+                <td>repositoryPathContent</td>
+                <td><input type="text" id= "repositoryContentResultId" style="width:1200px; height:25px;" value="$repositoryContentResult" /></td>
+            </tr>
+            <tr>
+                <td>topicsList</td>
+                <td>
+                    <input type="text" id= "topicsListResultId" style="width:1200px; height:25px;" value="$topicsListResult" />
+                </td>
+            </tr>
+            <tr>
+                <td>readmeContent</td>
+                <td>
+                    <textarea type="text" id= "readmeContentResultId" style="width:1200px; height:200px;">$readmeContentResult</textarea>
+                </td>
+            </tr>
+        </table>
+    #foreach( $content in $modelList )
+        <table style="display:none">
+            <tr>
+                <td><input type="text" id= "repositoryPathResultId$content.getIndex()" value="$content.getRepositoryPath()"/></td>
+            </tr>
+            <tr>
+                <td><input type="text" id= "downloadURLResultId$content.getIndex()" value="$content.getDownloadURL()"/></td>
+            </tr>
+            <tr>
+                <td><input type="text" id= "impressionCountResultId$content.getIndex()" value="$content.getImpressionCount()" /></td>
+            </tr>
+            <tr>
+                <td><input type="text" id= "clickCountResultId$content.getIndex()" value="$content.getClickCount()" /></td>
+            </tr>
+            <tr>
+                <td><input type="text" id= "repositoryContentResultId$content.getIndex()" value="$content.getRepositoryContent()" /></td>
+            </tr>
+            <tr>
+                <td><input type="text" id= "topicsListResultId$content.getIndex()" value="$content.getTopicsListContent()" /></td>
+            </tr>
+            <tr>
+                <td><textarea type="text" id= "readmeContentResultId$content.getIndex()" >$content.getReadmeFileContent()</textarea></td>
+            </tr>
+        </table>
+        #end
+    </fieldset>
+</form>
+<body>
+</body>
+</html>
